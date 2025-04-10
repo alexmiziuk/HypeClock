@@ -1,0 +1,35 @@
+.timer {
+	margin-top: 57vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0 20px;
+	&__minutes {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+		gap: 20px;
+		font-size: 160px;
+		padding: 0 30px;
+		color: white;
+		background-color: rgba(0, 0, 0, 0.5);
+		border: none;
+		border-radius: 10px;
+	}
+	&__seconds {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+		gap: 20px;
+		font-size: 160px;
+		padding: 0 30px;
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
+		border-radius: 10px;
+	}
+
+	
+}
