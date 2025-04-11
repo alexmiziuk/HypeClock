@@ -1,0 +1,33 @@
+.local-time {
+	font-family: Arial, sans-serif;
+	max-width: 300px;
+	margin: 0 auto;
+	text-align: center;
+	padding: 20px;
+	border-radius: 8px;
+	background-color: #f5f5f5;
+ }
+ 
+ .time-display {
+	margin-top: 15px;
+ }
+ 
+ .time {
+	font-size: 2.5rem;
+	font-weight: bold;
+	color: #333;
+ }
+ 
+ .timezone-info {
+	margin-top: 10px;
+	font-size: 1rem;
+	color: #666;
+ }
+ 
+ .timezone {
+	font-weight: bold;
+ }
+ 
+ .offset {
+	margin-left: 5px;
+ }
