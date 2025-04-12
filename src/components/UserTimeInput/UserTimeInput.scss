@@ -1,15 +1,27 @@
 .time-input-container {
 	display: flex;
+	margin-top: 40px;
 	gap: 8px;
 	align-items: center;
 	font-family: Arial, sans-serif;
+	justify-content: center;
 }
-
 
 .time-input-group {
 	display: flex;
 	align-items: center;
 	gap: 4px;
+	position: relative;
+}
+
+.time-input-label {
+	position: absolute;
+	top: -18px;
+	left: 45%;
+	transform: translateX(-50%);
+
+	font-size: 14px;
+	color: #555;
 }
 
 .time-input-group input {
@@ -34,19 +46,19 @@
 	padding: 4px 8px;
 	cursor: pointer;
 	font-size: 12px;
-	transition: background-color 0.2s;
 	transition:
+		background-color 0.3s,
 		transform 0.1s ease,
 		box-shadow 0.1s ease;
-		&:active {
-			transform: scale(0.95); /* Уменьшение кнопки при клике */
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Тень при нажатии */
-		 }
-		 &:hover {
-			background-color: #dbddd8; /* Темный оттенок при наведении */
-		 }
+	&:active {
+		transform: scale(0.95); /* Уменьшение кнопки при клике */
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Тень при нажатии */
+	}
+	&:hover {
+		background-color: rgb(140, 145, 150);
+		color: rgb(255, 255, 255);
+	}
 }
-
 
 .time-input-group span {
 	font-size: 16px;

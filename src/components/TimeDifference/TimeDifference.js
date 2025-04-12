@@ -1,11 +1,10 @@
 import './TimeDifference.scss';
 import React, { useState, useEffect } from 'react';
 
-function TimeDifference({ inputTimeToTimer, sendLocalTime }) {
+function TimeDifference({ inputTimeToTimer, sendLocalTime, setGlobalTime }) {
 	const [fixedDifference, setFixedDifference] = useState(null);
 
 	useEffect(() => {
-		// Вычисляем разницу при каждом изменении sendLocalTime
 		if (inputTimeToTimer && sendLocalTime) {
 			try {
 				const parseTimeString = (str) => {
@@ -16,11 +15,18 @@ function TimeDifference({ inputTimeToTimer, sendLocalTime }) {
 				const timeToSeconds = ({ hours, minutes, seconds }) =>
 					hours * 3600 + minutes * 60 + seconds;
 
-				// Используем актуальное значение time на момент нажатия
 				const time1 = timeToSeconds(parseTimeString(sendLocalTime));
 				const time2 = timeToSeconds(inputTimeToTimer);
-
-				const diffSeconds = Math.abs(time1 - time2);
+				
+				let diffSeconds = 0
+				
+				if (time1 < time2) {
+					diffSeconds = time2 - time1;
+				} else {
+					console.log('Вводимая величина должна быть больше локального времени');
+				}
+				
+				/* const diffSeconds = Math.abs(time1 - time2); */
 
 				const formatTime = (seconds) => {
 					const hrs = Math.floor(seconds / 3600);
@@ -30,18 +36,20 @@ function TimeDifference({ inputTimeToTimer, sendLocalTime }) {
 				};
 
 				setFixedDifference(formatTime(diffSeconds));
+
+
+				setGlobalTime(formatTime(diffSeconds));
 			} catch (e) {
 				setFixedDifference('Ошибка');
 			}
 		}
-	}, [inputTimeToTimer]); // Срабатываем только при изменении inputTimeToTimer
-
-	if (!fixedDifference) return <div>Ожидание данных...</div>;
+	}, [inputTimeToTimer, setGlobalTime]);
+	
 
 	return (
-		<div className="time-difference">
-			Фиксированная разница: {fixedDifference}
-		</div>
+		<>
+		{!fixedDifference? <div>Ожидание данных...</div> : ''}
+		</>
 	);
 }
 

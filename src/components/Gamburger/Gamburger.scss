@@ -1,0 +1,60 @@
+.gamburger {
+	width: 25px;
+	height: 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	cursor: pointer;
+	z-index: 2;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	transition: all 0.3s ease-in-out;
+	&--active {
+		.gamburger__line {
+			background-color: #000;
+
+			&:nth-child(1) {
+				transform: rotate(45deg) translate(5px, 5px);
+			}
+
+			&:nth-child(2) {
+				opacity: 0;
+			}
+
+			&:nth-child(3) {
+				transform: rotate(-45deg) translate(5px, -5px);
+			}
+		}
+	}
+
+	&:hover &__line {
+		background-color: #000;
+	}
+
+	&__line {
+		width: 100%;
+		height: 2px;
+		background-color: #8a8383;
+		transition: all 0.3s ease-in-out;
+	}
+
+	// Новые стили для выезжающего меню
+	&__content {
+		position: fixed;
+		top: 0;
+		right: -100%;
+		width: 250px;
+		height: 100vh;
+		background: white;
+		box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+		padding: 20px;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		z-index: 1;
+
+		// Показываем меню при добавлении класса --active
+		.gamburger--active & {
+			right: 0;
+		}
+	}
+}

@@ -35,7 +35,7 @@ const UserLocalTime = ({ onTimeUpdate }) => {
 	return (
 		
     <div className="local-time">
-      <h2>Ваше локальное время</h2>
+      <h2>Your local time</h2>
       <div className="time-display">
         <span className="time">{time.timeString}</span>
         <div className="timezone-info">

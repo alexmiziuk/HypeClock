@@ -16,15 +16,14 @@ const UserTimeInput = forwardRef((_props, ref) => {
 
 	useImperativeHandle(ref, () => ({
 		getTime: () => time
-	 }));
-  
-	 useEffect(() => {
-		return () => {
-		  if (intervalRef.current) clearInterval(intervalRef.current);
-		  if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
-		};
-	 }, []); // Только при размонтировании
+	}));
 
+	useEffect(() => {
+		return () => {
+			if (intervalRef.current) clearInterval(intervalRef.current);
+			if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
+		};
+	}, []);
 	const handleChange = (e, type) => {
 		const value = Math.max(0, parseInt(e.target.value) || 0);
 		const maxValues = { hours: 23, minutes: 59, seconds: 59 };
@@ -51,10 +50,9 @@ const UserTimeInput = forwardRef((_props, ref) => {
 	};
 
 	const startContinuousChange = (type, direction) => {
-		// Первое изменение сразу
+		
 		direction === 'up' ? increment(type) : decrement(type);
 
-		// Затем устанавливаем интервал для повторных изменений
 		delayTimerRef.current = setTimeout(() => {
 			intervalRef.current = setInterval(() => {
 				direction === 'up' ? increment(type) : decrement(type);
@@ -76,17 +74,17 @@ const UserTimeInput = forwardRef((_props, ref) => {
 	const increment = (type) => {
 		const maxValues = { hours: 23, minutes: 59, seconds: 59 };
 		setTime(prev => {
-      const newValue = prev[type] < maxValues[type] ? prev[type] + 1 : 0;
-      return {...prev, [type]: newValue};
-    });
+			const newValue = prev[type] < maxValues[type] ? prev[type] + 1 : 0;
+			return { ...prev, [type]: newValue };
+		});
 	};
 
 	const decrement = (type) => {
 		const maxValues = { hours: 23, minutes: 59, seconds: 59 };
 		setTime(prev => {
 			const newValue = prev[type] > 0 ? prev[type] - 1 : maxValues[type];
-			return {...prev, [type]: newValue};
-		 });
+			return { ...prev, [type]: newValue };
+		});
 	};
 
 	const formatWithLeadingZero = (value) => {
@@ -95,8 +93,9 @@ const UserTimeInput = forwardRef((_props, ref) => {
 
 	return (
 		<div className="time-input-container">
-			{/* Часы */}
+
 			<div className="time-input-group">
+				<label className="time-input-label">h</label>
 				<button
 					className="time-input-button"
 					onMouseDown={() => startContinuousChange('hours', 'down')}
@@ -125,8 +124,8 @@ const UserTimeInput = forwardRef((_props, ref) => {
 				<span>:</span>
 			</div>
 
-			{/* Минуты */}
 			<div className="time-input-group">
+				<label className="time-input-label">m</label>
 				<button
 					className="time-input-button"
 					onMouseDown={() => startContinuousChange('minutes', 'down')}
@@ -155,8 +154,8 @@ const UserTimeInput = forwardRef((_props, ref) => {
 				<span>:</span>
 			</div>
 
-			{/* Секунды */}
 			<div className="time-input-group">
+				<label className="time-input-label">s</label>
 				<button
 					className="time-input-button"
 					onMouseDown={() => startContinuousChange('seconds', 'down')}
