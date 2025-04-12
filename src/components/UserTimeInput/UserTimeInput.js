@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import './UserTimeInput.scss';
 
-const UserTimeInput = ({ onTimeChange }) => {
+const UserTimeInput = forwardRef((_props, ref) => {
 	const [time, setTime] = useState({
 		hours: 0,
 		minutes: 0,
@@ -14,13 +14,16 @@ const UserTimeInput = ({ onTimeChange }) => {
 	const intervalRef = useRef(null);
 	const delayTimerRef = useRef(null);
 
-	// Очищаем интервал при размонтировании компонента
-	useEffect(() => {
+	useImperativeHandle(ref, () => ({
+		getTime: () => time
+	 }));
+  
+	 useEffect(() => {
 		return () => {
-			if (intervalRef.current) clearInterval(intervalRef.current);
-			if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
+		  if (intervalRef.current) clearInterval(intervalRef.current);
+		  if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
 		};
-	}, []);
+	 }, []); // Только при размонтировании
 
 	const handleChange = (e, type) => {
 		const value = Math.max(0, parseInt(e.target.value) || 0);
@@ -72,18 +75,18 @@ const UserTimeInput = ({ onTimeChange }) => {
 
 	const increment = (type) => {
 		const maxValues = { hours: 23, minutes: 59, seconds: 59 };
-		setTime(prev => ({
-			...prev,
-			[type]: prev[type] < maxValues[type] ? prev[type] + 1 : 0
-		}));
+		setTime(prev => {
+      const newValue = prev[type] < maxValues[type] ? prev[type] + 1 : 0;
+      return {...prev, [type]: newValue};
+    });
 	};
 
 	const decrement = (type) => {
 		const maxValues = { hours: 23, minutes: 59, seconds: 59 };
-		setTime(prev => ({
-			...prev,
-			[type]: prev[type] > 0 ? prev[type] - 1 : maxValues[type]
-		}));
+		setTime(prev => {
+			const newValue = prev[type] > 0 ? prev[type] - 1 : maxValues[type];
+			return {...prev, [type]: newValue};
+		 });
 	};
 
 	const formatWithLeadingZero = (value) => {
@@ -182,6 +185,6 @@ const UserTimeInput = ({ onTimeChange }) => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default UserTimeInput;

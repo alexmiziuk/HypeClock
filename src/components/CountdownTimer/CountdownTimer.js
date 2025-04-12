@@ -24,6 +24,7 @@ const CountdownTimer = () => {
 	}, []); 
  
 	const formatNumber = (num) => String(num).padStart(2, '0');
+	
  
 	return (
 	  <section className='timer'>
