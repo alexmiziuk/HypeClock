@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './UserLocalTime.scss';
 
-const UserLocalTime = () => {
+const UserLocalTime = ({ onTimeUpdate }) => {
   const [time, setTime] = useState({
     timeString: 'Загрузка...',
     timeZone: '',
@@ -20,13 +20,17 @@ const UserLocalTime = () => {
       const offset = -now.getTimezoneOffset() / 60;
       const offsetString = `UTC${offset >= 0 ? '+' : ''}${offset}`;
       
-      setTime({ timeString, timeZone, offset: offsetString });
+		 setTime({ timeString, timeZone, offset: offsetString });
+		 
+		 if (typeof onTimeUpdate === 'function') {
+			onTimeUpdate(timeString);
+		 }
     };
 
     updateTime();
     const timer = setInterval(updateTime, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [onTimeUpdate]);
   
 	return (
 		

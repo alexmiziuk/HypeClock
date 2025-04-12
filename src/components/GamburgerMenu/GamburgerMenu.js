@@ -6,26 +6,26 @@ import { useState, useRef } from 'react';
 import TimeDifference from '../TimeDifference/TimeDifference';
 
 function GamburgerMenu() {
-	const [timeData, setTimeData] = useState(null);
-	const [showTimeDifference, setShowTimeDifference] = useState(false)
+	const [inputTimeToTimer, setInputTimeToTimer]  = useState(null), [showTimeDifference, setShowTimeDifference] = useState(false)
+	const [currentTime, setCurrentTime] = useState('');
 	const timeInputRef = useRef();
 	const handleSend = () => {
 		if(timeInputRef.current) {
 		  const currentTime = timeInputRef.current.getTime();
-		  setTimeData(currentTime);
+		  setInputTimeToTimer(currentTime);
 		  setShowTimeDifference(true);
 		}
 	 };
 	return (
 		<div className="gamburger-menu">
-			<UserLocalTime />
+			<UserLocalTime onTimeUpdate={setCurrentTime}/>
 			<UserTimeInput ref={timeInputRef}/>
 			<button onClick={handleSend}>
 
 				Send Time
 			</button>
-			{showTimeDifference && timeData && (
-				<TimeDifference time={timeData} />
+			{showTimeDifference && inputTimeToTimer && (
+				<TimeDifference inputTimeToTimer={inputTimeToTimer} sendLocalTime={currentTime} />
 			)}
 		</div>
 	)
