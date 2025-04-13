@@ -51,17 +51,21 @@ const CountdownTimer = ({ fixedTime }) => {
             <div key={index} className="timer__hours-hour">{digit}</div>
           ))}
         </div>
-      )}
+			)}
+		{(time.hours > 0 || time.minutes > 0) && (
       <div className="timer__minutes">
         {formatNumber(time.minutes).split('').map((digit, index) => (
           <div key={index} className="timer__minutes-min">{digit}</div>
         ))}
       </div>
+			)}
+			{(time.hours > 0 || time.minutes > 0 || time.seconds > 0) && (
       <div className="timer__seconds">
         {formatNumber(time.seconds).split('').map((digit, index) => (
           <div key={index} className="timer__seconds-sec">{digit}</div>
         ))}
-      </div>
+				</div>
+			)}
     </section>
   );
 };
