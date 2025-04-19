@@ -1,9 +1,11 @@
 import './GamburgerMenu.scss';
 import UserLocalTime from '../UserLocalTime/UserLocalTime';
 import UserTimeInput from '../UserTimeInput/UserTimeInput';
+import BackgroundControls from '../BackgroundControls/BackgroundControls';
 import React from 'react';
 import { useState, useRef } from 'react';
 import TimeDifference from '../TimeDifference/TimeDifference';
+
 
 function GamburgerMenu({ setGlobalTime, isActiveGamburger }) {
 	const [inputTimeToTimer, setInputTimeToTimer] = useState(null), [showTimeDifference, setShowTimeDifference] = useState(false)
@@ -26,7 +28,9 @@ function GamburgerMenu({ setGlobalTime, isActiveGamburger }) {
 			{showTimeDifference && inputTimeToTimer && (
 				<TimeDifference inputTimeToTimer={inputTimeToTimer} sendLocalTime={currentTime} setGlobalTime={setGlobalTime} />
 			)}
+			<BackgroundControls />
 		</div>
+		
 	)
 }
 

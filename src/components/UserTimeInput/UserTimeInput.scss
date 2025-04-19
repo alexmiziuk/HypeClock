@@ -51,8 +51,8 @@
 		transform 0.1s ease,
 		box-shadow 0.1s ease;
 	&:active {
-		transform: scale(0.95); /* Уменьшение кнопки при клике */
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Тень при нажатии */
+		transform: scale(0.95); 
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 	}
 	&:hover {
 		background-color: rgb(140, 145, 150);
