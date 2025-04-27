@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import './GamburgerPanel.scss';
 
 const GamburgerPanel = ({ children, isVisible, setIsPanelVisible, isActiveGamburger, isBgControls }) => {
+
+  
 	useEffect(() => {
+		
 		if (isBgControls) {
 		  setIsPanelVisible(false);
 		} else {
@@ -10,7 +13,11 @@ const GamburgerPanel = ({ children, isVisible, setIsPanelVisible, isActiveGambur
 		}
 	 }, [isBgControls, setIsPanelVisible]);
   
-	 // правильное вычисление className на каждую перерисовку
+	 useEffect(() => {
+		if (!isActiveGamburger) {
+		  setIsPanelVisible(false);
+		}
+	  }, []);
 	 const className = `gamburger-panel ${!isBgControls && (isVisible || isActiveGamburger)
 		? 'visible'
 		: ''}`;
