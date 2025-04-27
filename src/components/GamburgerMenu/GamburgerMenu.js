@@ -7,7 +7,7 @@ import { useState, useRef } from 'react';
 import TimeDifference from '../TimeDifference/TimeDifference';
 
 
-function GamburgerMenu({ setGlobalTime, isActiveGamburger }) {
+function GamburgerMenu({ setGlobalTime, isActiveGamburger}) {
 	const [inputTimeToTimer, setInputTimeToTimer] = useState(null), [showTimeDifference, setShowTimeDifference] = useState(false)
 	const [currentTime, setCurrentTime] = useState('');
 	const timeInputRef = useRef();
