@@ -10,17 +10,18 @@ import './App.scss';
 
 
 function App() {
+	const [isBgControls, setBgControls] = useState(false);
 	const [isPanelVisible, setIsPanelVisible] = useState(false);
 	const [isActiveGamburger, setIsActiveGamburger] = useState(false);
 	const [fixedTime, setFixedTime] = useState(null);
 	return (
 		<div className="App">
 			<BackgroundManager>
-				<GamburgerMenu isActiveGamburger={isActiveGamburger} setGlobalTime={setFixedTime} />
+				<GamburgerMenu isActiveGamburger={isActiveGamburger} setGlobalTime={setFixedTime} setBgControls={setBgControls} />
 				<div className="background-panel-hover"
 					onMouseEnter={() => setIsPanelVisible(true)}
 					onMouseLeave={() => setIsPanelVisible(false)}>
-					<GamburgerPanel isVisible={isPanelVisible} isActiveGamburger={isActiveGamburger}>
+					<GamburgerPanel isVisible={isPanelVisible} setIsPanelVisible={setIsPanelVisible} isActiveGamburger={isActiveGamburger} isBgControls={isBgControls}>
 						<Gamburger setIsActiveGamburger={setIsActiveGamburger} isActiveGamburger={isActiveGamburger} />
 					</GamburgerPanel>
 				</div>

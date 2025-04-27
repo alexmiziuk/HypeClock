@@ -3,7 +3,7 @@ import './BackgroundControls.scss';
 import { useContext } from 'react';
 import { BackgroundContext } from '../../backgroundContext';
 
-function BackgroundControls() {
+function BackgroundControls({ setBgControls }) {
 	const {
 		handleFileUpload,
 		resetBackground,
@@ -16,7 +16,9 @@ function BackgroundControls() {
 	} = useContext(BackgroundContext);
 
 	return (
-		<div className="background-controls">
+		<div className="background-controls"
+			onMouseEnter={() => setBgControls(true)}
+			onMouseLeave={() => setBgControls(false)}>
 			<label className="upload-button">
 				📤 Upload background
 				<input
