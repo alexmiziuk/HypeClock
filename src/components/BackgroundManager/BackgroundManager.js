@@ -69,12 +69,12 @@ const BackgroundManager = ({ children }) => {
 		setError('');
 
 		if (!ImageMimeTypes.includes(file.type)) {
-			setError('Недопустимый формат файла');
+			setError('Invalid file format');
 			return;
 		}
 
 		if (backgrounds.length >= 9) {
-			setError('Достигнут лимит. Удалите старые фоны');
+			setError('Limit reached. Please delete old backgrounds');
 			return;
 		}
 
@@ -90,7 +90,7 @@ const BackgroundManager = ({ children }) => {
 			setBackgrounds(newBackgrounds);
 			saveCurrentBg(compressed);
 		} catch (err) {
-			setError('Ошибка обработки изображения');
+			setError('Image processing error');
 			saveCurrentBg(defaultBackgroundImg);
 		}
 	}, [backgrounds]);
@@ -106,6 +106,7 @@ const BackgroundManager = ({ children }) => {
 				: defaultBackgroundImg;
 			saveCurrentBg(newCurrent);
 		}
+		setError('');
 	}, [backgrounds, currentBg]);
 
 	const resetBackground = useCallback(() => {
@@ -113,6 +114,7 @@ const BackgroundManager = ({ children }) => {
 		localStorage.removeItem('currentBackground');
 		setBackgrounds([]);
 		saveCurrentBg(defaultBackgroundImg);
+		setError('');
 	}, []);
 
 	const contextValue = useMemo(() => ({
