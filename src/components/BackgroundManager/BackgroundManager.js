@@ -1,10 +1,13 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import './BackgroundManager.scss';
 import defaultBackgroundImg from '../../assets/images/background.jpg';
 import { BackgroundContext } from '../../backgroundContext';
 
+
+const ImageMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
 const BackgroundManager = ({ children }) => {
-	const ImageMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+	
 	const [backgrounds, setBackgrounds] = useState([]);
 	const [currentBg, setCurrentBg] = useState(defaultBackgroundImg);
 	const [error, setError] = useState('');
@@ -59,59 +62,58 @@ const BackgroundManager = ({ children }) => {
 		 });
 	};
 
-	const handleFileUpload = async (e) => {
-		 const file = e.target.files[0];
-		 if (!file) return;
+	const handleFileUpload = useCallback(async (e) => {
+		const file = e.target.files[0];
+		if (!file) return;
 
-		 setError('');
+		setError('');
 
-		 if (!ImageMimeTypes.includes(file.type)) {
-			  setError('Недопустимый формат файла');
-			  return;
-		 }
+		if (!ImageMimeTypes.includes(file.type)) {
+			setError('Недопустимый формат файла');
+			return;
+		}
 
-		 if (backgrounds.length >= 9) {
-			  setError('Достигнут лимит. Удалите старые фоны');
-			  return;
-		 }
+		if (backgrounds.length >= 9) {
+			setError('Достигнут лимит. Удалите старые фоны');
+			return;
+		}
 
-		 try {
-			  const compressed = await compressImage(file);
+		try {
+			const compressed = await compressImage(file);
 
-			  const newBackgrounds = [
-					{ url: compressed, timestamp: Date.now() },
-					...backgrounds
-			  ].slice(0, 9);
+			const newBackgrounds = [
+				{ url: compressed, timestamp: Date.now() },
+				...backgrounds
+			].slice(0, 9);
 
-			  localStorage.setItem('backgrounds', JSON.stringify(newBackgrounds));
-			  
-			  setBackgrounds(newBackgrounds);
-			  saveCurrentBg(compressed);
-		 } catch (err) {
-			  setError('Ошибка обработки изображения');
-			  saveCurrentBg(defaultBackgroundImg);
-		 }
-	};
+			localStorage.setItem('backgrounds', JSON.stringify(newBackgrounds));
+			setBackgrounds(newBackgrounds);
+			saveCurrentBg(compressed);
+		} catch (err) {
+			setError('Ошибка обработки изображения');
+			saveCurrentBg(defaultBackgroundImg);
+		}
+	}, [backgrounds]);
 
-	const deleteBackground = (index) => {
-		 const newBackgrounds = backgrounds.filter((_, i) => i !== index);
-		 localStorage.setItem('backgrounds', JSON.stringify(newBackgrounds));
-		 setBackgrounds(newBackgrounds);
+	const deleteBackground = useCallback((index) => {
+		const newBackgrounds = backgrounds.filter((_, i) => i !== index);
+		localStorage.setItem('backgrounds', JSON.stringify(newBackgrounds));
+		setBackgrounds(newBackgrounds);
 
-		 if (currentBg === backgrounds[index].url) {
-			  const newCurrent = newBackgrounds.length > 0
-					? newBackgrounds[0].url
-					: defaultBackgroundImg;
-			  saveCurrentBg(newCurrent);
-		 }
-	};
+		if (currentBg === backgrounds[index].url) {
+			const newCurrent = newBackgrounds.length > 0
+				? newBackgrounds[0].url
+				: defaultBackgroundImg;
+			saveCurrentBg(newCurrent);
+		}
+	}, [backgrounds, currentBg]);
 
-	const resetBackground = () => {
-		 localStorage.removeItem('backgrounds');
-		 localStorage.removeItem('currentBackground');
-		 setBackgrounds([]);
-		 saveCurrentBg(defaultBackgroundImg);
-	};
+	const resetBackground = useCallback(() => {
+		localStorage.removeItem('backgrounds');
+		localStorage.removeItem('currentBackground');
+		setBackgrounds([]);
+		saveCurrentBg(defaultBackgroundImg);
+	}, []);
 
 	const contextValue = useMemo(() => ({
 		 handleFileUpload,
@@ -119,10 +121,10 @@ const BackgroundManager = ({ children }) => {
 		 error,
 		 backgrounds,
 		 currentBg,
-		 setCurrentBg: saveCurrentBg, // Передаем saveCurrentBg вместо setCurrentBg
+		 setCurrentBg: saveCurrentBg,
 		 deleteBackground,
 		 ImageMimeTypes
-	}), [error, backgrounds, currentBg]);
+	}), [error, backgrounds, currentBg, handleFileUpload, resetBackground, deleteBackground]);
 
 	return (
 		 <BackgroundContext.Provider value={contextValue}>

@@ -17,7 +17,8 @@ const GamburgerPanel = ({ children, isVisible, setIsPanelVisible, isActiveGambur
 		if (!isActiveGamburger) {
 		  setIsPanelVisible(false);
 		}
-	  }, []);
+	 }, [isActiveGamburger, setIsPanelVisible]);
+	
 	 const className = `gamburger-panel ${!isBgControls && (isVisible || isActiveGamburger)
 		? 'visible'
 		: ''}`;
