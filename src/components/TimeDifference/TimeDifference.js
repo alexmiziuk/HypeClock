@@ -19,12 +19,12 @@ function TimeDifference({ inputTimeToTimer, sendLocalTime, setGlobalTime }) {
 				const time1 = timeToSeconds(parseTimeString(sendLocalTime));
 				const time2 = timeToSeconds(inputTimeToTimer);
 
-				if (time2 <= time1) {
+				const diffSeconds = time2 - time1;
+
+				if (diffSeconds < 0) {
 					setError('The entered value must be greater than the local time');
 					return;
 				}
-
-				const diffSeconds = time2 - time1;
 
 				const formatTime = (seconds) => {
 					const hrs = Math.floor(seconds / 3600);
