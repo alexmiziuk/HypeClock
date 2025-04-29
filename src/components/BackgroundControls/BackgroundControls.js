@@ -42,7 +42,7 @@ function BackgroundControls({ setBgControls }) {
 							src={bg.url}
 							alt={`Фон ${index + 1}`}
 							className={`thumbnail ${currentBg === bg.url ? 'active' : ''}`}
-							onClick={() => setCurrentBg(bg.url)} // Используем setCurrentBg (это saveCurrentBg)
+							onClick={() => setCurrentBg(bg.url)}
 						/>
 						<button
 							className="delete-button"

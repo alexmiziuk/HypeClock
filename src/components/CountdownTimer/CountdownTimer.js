@@ -18,7 +18,7 @@ const CountdownTimer = ({ fixedTime }) => {
     return () => {
       if (currentTimer) clearInterval(currentTimer);
     };
-  }, [fixedTime]);
+  }, [fixedTime, currentTimer]);
 
   useEffect(() => {
     const timerID = setInterval(() => {
@@ -39,13 +39,13 @@ const CountdownTimer = ({ fixedTime }) => {
 
     setCurrentTimer(timerID);
     return () => clearInterval(timerID);
-  }, [time]);
+  }, []);
 
 	const formatNumber = (num) => String(num).padStart(2, '0');
 
 	return (
-    <section className='timer'>
-		 {time.hours > 0 && (
+		<section className='timer'>	
+			{time.hours > 0 && (
         <div className="timer__hours">
           {formatNumber(time.hours).split('').map((digit, index) => (
             <div key={index} className="timer__hours-hour">{digit}</div>

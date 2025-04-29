@@ -3,7 +3,7 @@ import './UserLocalTime.scss';
 
 const UserLocalTime = ({ onTimeUpdate }) => {
   const [time, setTime] = useState({
-    timeString: 'Загрузка...',
+    timeString: 'Loading...',
     timeZone: '',
     offset: ''
   });

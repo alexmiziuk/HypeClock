@@ -28,9 +28,16 @@ function App() {
 			document.removeEventListener('keydown', handleKeyDown);
 		};
 	}
-	, []);
+		, []);
+	
+	const clickApp = (event) => {
+		if (isActiveGamburger) {
+			setIsActiveGamburger(false);
+			
+		}
+	}
 	return (
-		<div className="App">
+<div className="app" onClick={clickApp}>
 			<BackgroundManager>
 				<GamburgerMenu isActiveGamburger={isActiveGamburger} setGlobalTime={setFixedTime} setBgControls={setBgControls} />
 				<div className="background-panel-hover"

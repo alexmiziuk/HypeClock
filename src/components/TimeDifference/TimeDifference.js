@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 function TimeDifference({ inputTimeToTimer, sendLocalTime, setGlobalTime }) {
 	const [fixedDifference, setFixedDifference] = useState(null);
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		if (inputTimeToTimer && sendLocalTime) {
@@ -17,16 +18,13 @@ function TimeDifference({ inputTimeToTimer, sendLocalTime, setGlobalTime }) {
 
 				const time1 = timeToSeconds(parseTimeString(sendLocalTime));
 				const time2 = timeToSeconds(inputTimeToTimer);
-				
-				let diffSeconds = 0
-				
-				if (time1 < time2) {
-					diffSeconds = time2 - time1;
-				} else {
-					console.log('Вводимая величина должна быть больше локального времени');
+
+				if (time2 <= time1) {
+					setError('The entered value must be greater than the local time');
+					return;
 				}
-				
-				/* const diffSeconds = Math.abs(time1 - time2); */
+
+				const diffSeconds = time2 - time1;
 
 				const formatTime = (seconds) => {
 					const hrs = Math.floor(seconds / 3600);
@@ -35,20 +33,21 @@ function TimeDifference({ inputTimeToTimer, sendLocalTime, setGlobalTime }) {
 					return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 				};
 
-				setFixedDifference(formatTime(diffSeconds));
-
-
-				setGlobalTime(formatTime(diffSeconds));
+				const formatted = formatTime(diffSeconds);
+				setFixedDifference(formatted);
+				setGlobalTime(formatted);
+				setError(null);
 			} catch (e) {
-				setFixedDifference('Ошибка');
+				setError('Unexpected error occurred');
 			}
 		}
-	}, [inputTimeToTimer, setGlobalTime]);
-	
+		
+	}, [inputTimeToTimer, sendLocalTime, setGlobalTime]);
 
 	return (
 		<>
-		{!fixedDifference? <div>Ожидание данных...</div> : ''}
+			{error && <div className="error">{error}</div>}
+			{!fixedDifference && !error && <div>Waiting for data...</div>}
 		</>
 	);
 }
