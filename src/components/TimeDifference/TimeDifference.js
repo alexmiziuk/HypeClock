@@ -19,13 +19,26 @@ function TimeDifference({ inputTimeToTimer, sendLocalTime, setGlobalTime }) {
 				const time1 = timeToSeconds(parseTimeString(sendLocalTime));
 				const time2 = timeToSeconds(inputTimeToTimer);
 
-				const diffSeconds = time2 - time1;
+				let diffSeconds = time2 - time1;
+/* 
+				let timerId; */
 
 				if (diffSeconds < 0) {
 					setError('The entered value must be greater than the local time');
+					/* 
+										if (timerId) clearTimeout(timerId);
+					
+										timerId = setTimeout(() => {
+											setError('');
+										
+										
+										}, 15000); */
+					
 					return;
-				}
-
+					
+				} 
+				
+				
 				const formatTime = (seconds) => {
 					const hrs = Math.floor(seconds / 3600);
 					const mins = Math.floor((seconds % 3600) / 60);
@@ -41,7 +54,7 @@ function TimeDifference({ inputTimeToTimer, sendLocalTime, setGlobalTime }) {
 				setError('Unexpected error occurred');
 			}
 		}
-		
+
 	}, [inputTimeToTimer, sendLocalTime, setGlobalTime]);
 
 	return (

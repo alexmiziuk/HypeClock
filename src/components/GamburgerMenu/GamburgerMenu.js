@@ -5,6 +5,7 @@ import BackgroundControls from '../BackgroundControls/BackgroundControls';
 import React from 'react';
 import {useState, useRef } from 'react';
 import TimeDifference from '../TimeDifference/TimeDifference';
+import BackgroundColorTimer from '../BackgroundColorTimer/BackgroundColorTimer';
 
 
 function GamburgerMenu({ setGlobalTime, isActiveGamburger, setBgControls}) {
@@ -27,6 +28,7 @@ function GamburgerMenu({ setGlobalTime, isActiveGamburger, setBgControls}) {
 			<button className ="send-custom-time" onClick={handleSend}>
 				Send time to timer
 			</button>
+			<BackgroundColorTimer />
 			{showTimeDifference && inputTimeToTimer && (
 				<TimeDifference inputTimeToTimer={inputTimeToTimer} sendLocalTime={currentTime} setGlobalTime={setGlobalTime} />
 			)}

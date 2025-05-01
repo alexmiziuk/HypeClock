@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useBackgroundTimerContext } from '../../backgroundTimerContext';
 import './CountdownTimer.scss';
 
 const CountdownTimer = ({ fixedTime }) => {
+	
+	const { backgroundColor } = useBackgroundTimerContext()
+	
+	
+	
   const parseTime = (timeStr) => {
     if (!timeStr) return { hours: 0, minutes: 0, seconds: 0 };
     const [hours, minutes, seconds] = timeStr.split(':').map(Number);
@@ -46,21 +52,21 @@ const CountdownTimer = ({ fixedTime }) => {
 	return (
 		<section className='timer'>	
 			{time.hours > 0 && (
-        <div className="timer__hours">
+				<div className={backgroundColor === 'white' || backgroundColor === 'yellow' ? "timer__hours timer__hours active-color" : "timer__hours"} style={{ backgroundColor }}>
           {formatNumber(time.hours).split('').map((digit, index) => (
             <div key={index} className="timer__hours-hour">{digit}</div>
           ))}
         </div>
 			)}
 		{(time.hours > 0 || time.minutes > 0) && (
-      <div className="timer__minutes">
+				<div className={backgroundColor === 'white' || backgroundColor === 'yellow' ? "timer__hours timer__hours active-color" : "timer__hours"} style={{ backgroundColor }}>
         {formatNumber(time.minutes).split('').map((digit, index) => (
-          <div key={index} className="timer__minutes-min">{digit}</div>
+          <div key={index} className="timer__minutes-min" >{digit}</div>
         ))}
       </div>
 			)}
 			{(time.hours > 0 || time.minutes > 0 || time.seconds > 0) && (
-      <div className="timer__seconds">
+				<div className={backgroundColor === 'white' || backgroundColor === 'yellow' ? "timer__hours timer__hours active-color" : "timer__hours"} style={{ backgroundColor }}>
         {formatNumber(time.seconds).split('').map((digit, index) => (
           <div key={index} className="timer__seconds-sec">{digit}</div>
         ))}
